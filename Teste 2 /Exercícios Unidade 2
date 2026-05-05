@@ -1,0 +1,90 @@
+#Exercícios Unidade 2
+
+# 1
+n = float(input("Qual o número?: "))
+if n < 10:
+    print(n*2)
+elif n <= 20:
+    print(n/2)
+else:
+    print("O número ", n, " é inválido")
+
+# 2
+n_raw = input("Digite um número inteiro: ")
+if n_raw.isdigit():
+    n = int(n_raw)
+    resultado = "Par" if n % 2 == 0 else "Ímpar"
+    print(f"O número {n} é {resultado}.")
+else:
+    print("Erro: Digite apenas números inteiros positivos.")
+
+# 3
+n = int(input("Digite um número: "))
+print("Múltiplo" if n % 3 == 0 else "Não múltiplo")
+
+# 4
+nome = input("Qual o seu nome?: ")
+idade = int(input("Qual sua idade?: "))
+if idade < 18:
+    print(nome, "não pode assistir")
+else:
+    print(nome, "pode assistir")
+
+# 5
+n = float(input("Digite um número: "))
+if n > 0:
+    print("Positivo")
+elif n < 0:
+    print("Negativo")
+else:
+    print("Nulo")
+
+# 6
+texto = input("Digite um texto: ").lower()
+capitais = ["porto alegre", "florianopolis", "curitiba"]
+if texto in capitais:
+    print("É capital do sul")
+else:
+    print("Não é capital da região sul")
+
+# 7
+print("Não tem exercício 7")
+
+# 8 (média aluno)
+notas = [float(input(f"Digite a {i+1}ª nota: ")) for i in range(3)]
+media = sum(notas)/3
+if media < 6:
+    print(f"Média: {media:.1f} - Recuperação")
+    rec = float(input("Nota da Recuperação: "))
+    media = (media + rec) / 2
+status = "Aprovado" if media >= 6 else "Reprovado"
+print(f"Resultado: {status} (Média Final: {media:.1f})")
+
+# 9 (IMC)
+peso = float(input("Qual o seu peso?: "))
+altura = float(input("Qual sua altura?: "))
+imc = peso / altura**2
+if imc <= 18.5:
+    print("Você é magro")
+elif imc <= 25:
+    print("Você está normal")
+elif imc <= 30:
+    print("Você está com sobrepeso")
+else:
+    print("Você está obeso")
+
+# 10 (salário)
+horas = float(input("Quantas horas você trabalha na empresa?: "))
+sal = horas * 20
+
+if sal <= 1000:
+    ir = 0
+elif sal <= 2500:
+    ir = 0.1
+elif sal <= 5000:
+    ir = 0.2
+else:
+    ir = 0.35
+salario = sal * (1 - ir)
+
+print("Seu salário é ", salario)
