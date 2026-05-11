@@ -6,22 +6,24 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 from es import ler_curva_csv
-from interpol import interpolar_curva, interpolar_curva_local
+from interpol import interpolar_curva_local
 
 
-def _ler_grau(maximo: int) -> int:
+def _solicitar_grau(max_grau: int) -> int:
     while True:
         entrada = input(
-            f"Informe o grau do polinômio (1 a {maximo}): "
+            f"Informe o grau do polinômio (1 a {max_grau}) [default {max_grau}]: "
         ).strip()
+        if not entrada:
+            return max_grau
         try:
             grau = int(entrada)
         except ValueError:
-            print("Valor inválido. Digite um número inteiro.")
+            print("Entrada inválida. Digite um número inteiro.")
             continue
-        if 1 <= grau <= maximo:
+        if 1 <= grau <= max_grau:
             return grau
-        print(f"O grau deve estar entre 1 e {maximo}.")
+        print(f"Grau fora do intervalo permitido (1 a {max_grau}).")
 
 
 def main() -> None:
@@ -29,21 +31,12 @@ def main() -> None:
     caminho_csv = base_dir / "CurvaZero_04052026.csv"
 
     vertices, taxas = ler_curva_csv(caminho_csv)
-    grau_max = max(1, len(vertices) - 1)
-    grau = _ler_grau(grau_max)
-
-    if grau == grau_max:
-        xs_interp, ys_interp = interpolar_curva(vertices, taxas, num_pontos=300)
-        legenda = "Interpolação polinomial (global)"
-    else:
-        xs_interp, ys_interp = interpolar_curva_local(
-            vertices, taxas, grau=grau, num_pontos=300
-        )
-        legenda = f"Interpolação polinomial (grau {grau})"
+    grau = _solicitar_grau(len(vertices) - 1)
+    xs_interp, ys_interp = interpolar_curva_local(vertices, taxas, grau, num_pontos=300)
 
     plt.figure(figsize=(10, 6))
     plt.plot(vertices, taxas, "o", label="ETTJ Pré (dados)")
-    plt.plot(xs_interp, ys_interp, "-", label=legenda)
+    plt.plot(xs_interp, ys_interp, "-", label=f"Interpolação polinomial (grau {grau})")
     plt.title("Curva de Juros - ETTJ Pré ANBIMA")
     plt.xlabel("Vértices (dias)")
     plt.ylabel("Taxa (% a.a.)")
